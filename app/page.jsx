@@ -146,6 +146,225 @@ function PricingCard({ name, price, subtitle, features, featured = false, badge 
   );
 }
 
+function SlipModeDemo({ serif }) {
+  const [hardWeek, setHardWeek] = useState(false);
+  return (
+    <motion.div variants={fadeUp} className="rounded-[32px] border border-black/10 bg-white p-6 md:p-8">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <div className="mb-2 text-[0.68rem] uppercase tracking-[0.18em] text-black/40">Feature 01</div>
+          <h3 className={`${serif} text-[2rem] leading-tight`}>Slip mode</h3>
+          <p className="mt-2 text-sm leading-6 text-black/65 max-w-sm">
+            Two misses in a row and Forge automatically shifts into a lighter week — fewer sessions, same goal, zero guilt. No other app adapts like this.
+          </p>
+        </div>
+        <button
+          onClick={() => setHardWeek((v) => !v)}
+          className={`flex-shrink-0 rounded-full border px-4 py-2 text-xs uppercase tracking-[0.16em] transition-all duration-300 ${
+            hardWeek
+              ? "border-[#8d433c]/25 bg-[#8d433c]/10 text-[#c04a3d]"
+              : "border-black/10 bg-black/[0.03] text-black/50"
+          }`}
+        >
+          {hardWeek ? "Hard week" : "Normal week"}
+        </button>
+      </div>
+
+      <div className="mt-7 grid gap-4 md:grid-cols-2">
+        {/* Other apps */}
+        <div className="rounded-[24px] border border-black/8 bg-[#fafafa] p-5">
+          <div className="mb-4 text-[0.62rem] uppercase tracking-[0.18em] text-black/35">Other apps</div>
+          <div className="space-y-2">
+            {["SQL practice", "Dashboard project", "Case study draft", "Portfolio review"].map((task, i) => (
+              <div
+                key={task}
+                className={`flex items-center gap-3 rounded-xl border px-3 py-2.5 text-sm transition-all duration-300 ${
+                  hardWeek && i >= 2
+                    ? "border-[#8d433c]/20 bg-[#8d433c]/[0.06] text-[#c04a3d] line-through opacity-70"
+                    : "border-[#8d433c]/20 bg-[#8d433c]/[0.06] text-[#c04a3d]"
+                }`}
+              >
+                <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" strokeWidth={2} />
+                <span>{task}</span>
+                <span className="ml-auto text-[10px] text-[#c04a3d]/60">Overdue</span>
+              </div>
+            ))}
+          </div>
+          {hardWeek && (
+            <p className="mt-3 text-[11px] leading-5 text-black/40 italic">4 overdue. No guidance. Just guilt.</p>
+          )}
+        </div>
+
+        {/* Forge */}
+        <div className="rounded-[24px] border border-black/8 bg-[#111] p-5 text-white">
+          <div className="mb-4 text-[0.62rem] uppercase tracking-[0.18em] text-white/35">Forge</div>
+          {hardWeek ? (
+            <div>
+              <div className="rounded-2xl border border-[#d3b390]/15 bg-[#d3b390]/[0.07] p-4 mb-3">
+                <div className="text-[10px] uppercase tracking-[0.18em] text-[#e8c4a0] mb-2">Slip mode active</div>
+                <p className="text-sm leading-5 text-white/80">Rough week detected. Forge reduced this week to 2 sessions. Deadline holds at Jun 12.</p>
+              </div>
+              <div className="space-y-2">
+                {["SQL practice", "Dashboard project"].map((task) => (
+                  <div key={task} className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5 text-sm text-white/80">
+                    <div className="h-3.5 w-3.5 rounded-full border border-white/20 flex-shrink-0" />
+                    {task}
+                  </div>
+                ))}
+                {["Case study draft", "Portfolio review"].map((task) => (
+                  <div key={task} className="flex items-center gap-3 rounded-xl border border-white/5 bg-white/[0.02] px-3 py-2.5 text-sm text-white/25 line-through">
+                    <div className="h-3.5 w-3.5 rounded-full border border-white/10 flex-shrink-0" />
+                    {task}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="space-y-2">
+              {["SQL practice", "Dashboard project", "Case study draft", "Portfolio review"].map((task) => (
+                <div key={task} className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5 text-sm text-white/80">
+                  <div className="h-3.5 w-3.5 rounded-full border border-white/20 flex-shrink-0" />
+                  {task}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function DeadlineHonesty({ serif }) {
+  const [revealed, setRevealed] = useState(false);
+  const [choice, setChoice] = useState(null);
+  return (
+    <motion.div variants={fadeUp} className="rounded-[32px] border border-black/10 bg-white p-6 md:p-8">
+      <div className="mb-2 text-[0.68rem] uppercase tracking-[0.18em] text-black/40">Feature 02</div>
+      <h3 className={`${serif} text-[2rem] leading-tight`}>Deadline honesty</h3>
+      <p className="mt-2 text-sm leading-6 text-black/65 max-w-sm">
+        Most apps let you set any deadline and never question it. Forge tells you the truth before you start — so you can fix it early, not weeks in.
+      </p>
+
+      <div className="mt-7 rounded-[26px] border border-black/8 bg-[#111] p-6 text-white">
+        <div className="grid grid-cols-3 gap-3 mb-5">
+          <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-3">
+            <div className="text-[0.58rem] uppercase tracking-[0.16em] text-white/35">Goal</div>
+            <div className="mt-1.5 text-sm text-white/80">Data analyst</div>
+          </div>
+          <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-3">
+            <div className="text-[0.58rem] uppercase tracking-[0.16em] text-white/35">Deadline</div>
+            <div className="mt-1.5 text-sm text-white/80">Jun 12</div>
+          </div>
+          <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-3">
+            <div className="text-[0.58rem] uppercase tracking-[0.16em] text-white/35">Hrs/week</div>
+            <div className="mt-1.5 text-sm text-white/80">5 hrs</div>
+          </div>
+        </div>
+
+        {!revealed ? (
+          <button
+            onClick={() => setRevealed(true)}
+            className="w-full rounded-2xl border border-[#d3b390]/20 bg-[#efe1ca] py-3 text-sm font-medium text-black transition-all hover:-translate-y-0.5 hover:bg-[#f5ead9]"
+          >
+            Check if this is realistic →
+          </button>
+        ) : choice === "adjust" ? (
+          <div className="rounded-2xl border border-[#59705b]/20 bg-[#59705b]/10 p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Check className="h-4 w-4 text-[#a3c4a8]" strokeWidth={2.2} />
+              <div className="text-[10px] uppercase tracking-[0.18em] text-[#a3c4a8]">Deadline updated</div>
+            </div>
+            <p className="text-sm leading-5 text-white/80">New deadline: <span className="text-[#c8ddca] font-medium">Sep 4</span>. Confidence: <span className="text-[#c8ddca] font-medium">87%</span>. You're starting honest.</p>
+          </div>
+        ) : choice === "keep" ? (
+          <div className="rounded-2xl border border-[#8d433c]/25 bg-[#8d433c]/10 p-4">
+            <div className="text-[10px] uppercase tracking-[0.18em] text-[#c88d86] mb-2">Drift tracking active</div>
+            <p className="text-sm leading-5 text-white/75">Keeping Jun 12. Forge will track drift from day one and alert you the moment recovery becomes difficult.</p>
+          </div>
+        ) : (
+          <div className="rounded-2xl border border-[#8d433c]/25 bg-[#8d433c]/10 p-4">
+            <div className="text-[10px] uppercase tracking-[0.18em] text-[#c88d86] mb-2">Forge honest assessment</div>
+            <p className="text-sm leading-5 text-white/80 mb-4">
+              At 5 hrs/week, this goal takes <span className="text-[#f0a090] font-medium">~18 weeks</span>. You have <span className="text-[#f0a090] font-medium">10 weeks</span>. You're already behind before you start.
+            </p>
+            <div className="grid grid-cols-2 gap-2">
+              <button onClick={() => setChoice("adjust")} className="rounded-xl bg-[#efe1ca] py-2.5 text-sm font-medium text-black transition hover:bg-[#f5ead9]">
+                Adjust to Sep 4
+              </button>
+              <button onClick={() => setChoice("keep")} className="rounded-xl border border-white/10 bg-white/5 py-2.5 text-sm text-white/60 transition hover:bg-white/10">
+                Keep Jun 12
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </motion.div>
+  );
+}
+
+function ExitInterview({ serif }) {
+  const [state, setState] = useState("idle");
+  return (
+    <motion.div variants={fadeUp} className="rounded-[32px] border border-black/10 bg-white p-6 md:p-8">
+      <div className="mb-2 text-[0.68rem] uppercase tracking-[0.18em] text-black/40">Feature 04</div>
+      <h3 className={`${serif} text-[2rem] leading-tight`}>The exit interview</h3>
+      <p className="mt-2 text-sm leading-6 text-black/65 max-w-sm">
+        After 7 days inactive, instead of a re-engagement spam, Forge asks one honest question. Quitting becomes a decision, not a failure.
+      </p>
+
+      <div className="mt-7 rounded-[26px] border border-black/8 bg-[#111] p-6 text-white">
+        {state === "idle" && (
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <div className="h-1.5 w-1.5 rounded-full bg-white/25" />
+              <div className="text-[10px] uppercase tracking-[0.18em] text-white/35">7 days since last session</div>
+            </div>
+            <p className={`${serif} text-[1.6rem] leading-tight mb-6`}>Is this goal still something you want?</p>
+            <div className="grid grid-cols-2 gap-3">
+              <button onClick={() => setState("yes")} className="rounded-2xl border border-[#d3b390]/20 bg-[#efe1ca] py-3 text-sm font-medium text-black transition hover:-translate-y-0.5 hover:bg-[#f5ead9]">
+                Yes, I'm back
+              </button>
+              <button onClick={() => setState("no")} className="rounded-2xl border border-white/10 bg-white/[0.04] py-3 text-sm text-white/55 transition hover:bg-white/[0.08]">
+                Honestly, no
+              </button>
+            </div>
+          </div>
+        )}
+
+        {state === "yes" && (
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <Check className="h-4 w-4 text-[#a3c4a8]" strokeWidth={2.2} />
+              <div className="text-[10px] uppercase tracking-[0.18em] text-[#a3c4a8]">Welcome back</div>
+            </div>
+            <p className="text-sm leading-6 text-white/80 mb-4">Forge has rebuilt your plan from today. Deadline shifted to <span className="text-[#c8ddca] font-medium">Jul 3</span> to account for the gap. 2 recovery sessions added this week.</p>
+            <button onClick={() => setState("idle")} className="text-[11px] uppercase tracking-[0.16em] text-white/30 hover:text-white/50 transition">Reset demo</button>
+          </div>
+        )}
+
+        {state === "no" && (
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <div className="h-1.5 w-1.5 rounded-full bg-white/25" />
+              <div className="text-[10px] uppercase tracking-[0.18em] text-white/35">Goal closed — no guilt</div>
+            </div>
+            <p className="text-sm leading-6 text-white/75 mb-5">That's a real decision, not a failure. What changed?</p>
+            <div className="space-y-2 mb-4">
+              {["The goal changed", "Life got in the way", "Not the right time", "Found a better path"].map((opt) => (
+                <button key={opt} className="w-full rounded-xl border border-white/8 bg-white/[0.03] px-4 py-2.5 text-left text-sm text-white/65 transition hover:bg-white/[0.07] hover:text-white/85">
+                  {opt}
+                </button>
+              ))}
+            </div>
+            <button onClick={() => setState("idle")} className="text-[11px] uppercase tracking-[0.16em] text-white/30 hover:text-white/50 transition">Reset demo</button>
+          </div>
+        )}
+      </div>
+    </motion.div>
+  );
+}
+
 function OneTapRecovery({ serif }) {
   const [done, setDone] = useState(false);
   return (
@@ -937,6 +1156,94 @@ export default function Page() {
 
                 {/* One-tap Recovery */}
                 <OneTapRecovery serif={serif} />
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        <section className="bg-[#f0ebe0] py-20 md:py-28">
+          <div className={sectionWrap}>
+            <motion.div
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.1 }}
+              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.11 } } }}
+            >
+              <motion.div variants={fadeUp}>
+                <span className="rounded-full border border-black/10 bg-white/70 px-3 py-1.5 text-[11px] uppercase tracking-[0.18em] text-black/60 backdrop-blur">
+                  NO OTHER APP DOES THIS
+                </span>
+              </motion.div>
+
+              <motion.div variants={fadeUp} className="mt-5 grid gap-6 md:grid-cols-[1fr_1fr] md:items-end">
+                <h2 className={`${serif} text-[2.7rem] leading-[0.98] md:text-[4rem]`}>
+                  The four things
+                  <br />that make people stay.
+                </h2>
+                <p className="max-w-xl text-[1.04rem] leading-8 text-black/65">
+                  Every feature below came from a real complaint about every other productivity app. Each one is interactive — try them.
+                </p>
+              </motion.div>
+
+              {/* Row 1: Slip Mode + Deadline Honesty */}
+              <div className="mt-12 grid gap-5 md:grid-cols-2">
+                <SlipModeDemo serif={serif} />
+                <DeadlineHonesty serif={serif} />
+              </div>
+
+              {/* Row 2: Pattern Discovery + Exit Interview */}
+              <div className="mt-5 grid gap-5 md:grid-cols-[1.1fr_0.9fr]">
+
+                {/* Pattern Discovery */}
+                <motion.div variants={fadeUp} className="rounded-[32px] border border-black/10 bg-white p-6 md:p-8">
+                  <div className="mb-2 text-[0.68rem] uppercase tracking-[0.18em] text-black/40">Feature 03</div>
+                  <h3 className={`${serif} text-[2rem] leading-tight`}>Forge learns when you work best</h3>
+                  <p className="mt-2 text-sm leading-6 text-black/65 max-w-lg">
+                    After 4 weeks of session logs, Forge shows you a pattern you never noticed yourself. Then it moves your blocks to the slots that actually work.
+                  </p>
+
+                  <div className="mt-7 rounded-[26px] border border-black/8 bg-[#111] p-6 text-white">
+                    <div className="mb-5 text-[0.62rem] uppercase tracking-[0.18em] text-white/35">Your completion heatmap — last 4 weeks</div>
+                    <div className="grid grid-cols-6 gap-1.5 mb-2">
+                      {["", "Mon", "Tue", "Wed", "Thu", "Fri"].map((d) => (
+                        <div key={d} className="text-center text-[10px] uppercase tracking-[0.14em] text-white/30">{d}</div>
+                      ))}
+                    </div>
+                    {[
+                      { time: "7am", values: [45, 91, 38, 29, 88] },
+                      { time: "12pm", values: [72, 68, 55, 61, 70] },
+                      { time: "6pm", values: [30, 25, 22, 18, 35] },
+                      { time: "9pm", values: [15, 20, 12, 8, 19] },
+                    ].map((row) => (
+                      <div key={row.time} className="grid grid-cols-6 gap-1.5 mb-1.5">
+                        <div className="flex items-center text-[10px] uppercase tracking-[0.14em] text-white/30">{row.time}</div>
+                        {row.values.map((v, i) => (
+                          <div
+                            key={i}
+                            className="h-8 rounded-lg transition-all"
+                            style={{
+                              backgroundColor: v > 80
+                                ? `rgba(163,196,168,${v / 100})`
+                                : v > 50
+                                ? `rgba(215,187,154,${v / 100})`
+                                : `rgba(141,67,60,${Math.max(0.08, v / 100 * 0.5)})`,
+                            }}
+                            title={`${v}%`}
+                          />
+                        ))}
+                      </div>
+                    ))}
+
+                    <div className="mt-5 rounded-2xl border border-[#a3c4a8]/20 bg-[#a3c4a8]/[0.07] p-4">
+                      <div className="text-[10px] uppercase tracking-[0.18em] text-[#a3c4a8] mb-2">Forge insight</div>
+                      <p className="text-sm leading-5 text-white/80">
+                        You complete <span className="text-[#c8ddca] font-medium">91%</span> of sessions at <span className="text-[#c8ddca] font-medium">Tue 7am</span>. Thursday evenings: <span className="text-[#f0a090] font-medium">18%</span>. Your calendar has it backwards.
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+
+                <ExitInterview serif={serif} />
               </div>
             </motion.div>
           </div>

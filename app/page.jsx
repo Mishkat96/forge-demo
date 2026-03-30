@@ -146,6 +146,56 @@ function PricingCard({ name, price, subtitle, features, featured = false, badge 
   );
 }
 
+function OneTapRecovery({ serif }) {
+  const [done, setDone] = useState(false);
+  return (
+    <motion.div variants={fadeUp} className="rounded-[32px] border border-black/10 bg-white p-6 md:p-7">
+      <div className="mb-2 text-[0.68rem] uppercase tracking-[0.18em] text-black/40">Feature 05</div>
+      <h3 className={`${serif} text-[1.8rem] leading-tight`}>One-tap recovery</h3>
+      <p className="mt-2 text-sm leading-6 text-black/65">No text plan to decipher. One button moves the missed session to the next open slot.</p>
+
+      <div className="mt-6 rounded-[22px] border border-black/8 bg-[#111] p-5 text-white">
+        <div className="flex items-center gap-2">
+          <div className="h-1.5 w-1.5 rounded-full bg-[#c04a3d]" />
+          <div className="text-[10px] uppercase tracking-[0.18em] text-[#c88d86]">Wednesday session missed</div>
+        </div>
+        <p className="mt-3 text-sm leading-6 text-white/75">
+          SQL practice · 90 min · was scheduled for 6pm
+        </p>
+        <div className="mt-5">
+          {done ? (
+            <div className="flex items-center gap-3 rounded-2xl border border-[#59705b]/25 bg-[#59705b]/10 px-4 py-3.5">
+              <Check className="h-4 w-4 text-[#a3c4a8]" strokeWidth={2.2} />
+              <div>
+                <div className="text-sm text-[#c8ddca]">Rescheduled to Thu 7:00 AM</div>
+                <div className="text-[10px] text-[#a3c4a8]/70 mt-0.5">Deadline holds at Jun 12</div>
+              </div>
+            </div>
+          ) : (
+            <button
+              onClick={() => setDone(true)}
+              className="group w-full rounded-2xl border border-[#d3b390]/20 bg-[#efe1ca] px-4 py-3.5 text-left transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#f5ead9]"
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-sm font-medium text-black">Reschedule to Thu 7:00 AM</div>
+                  <div className="text-[10px] text-black/50 mt-0.5">Keeps deadline at Jun 12</div>
+                </div>
+                <ArrowRight className="h-4 w-4 text-black/50 transition-transform group-hover:translate-x-0.5" />
+              </div>
+            </button>
+          )}
+        </div>
+        {!done && (
+          <button className="mt-2 w-full rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3 text-sm text-white/40 transition hover:text-white/60">
+            I'll handle it myself
+          </button>
+        )}
+      </div>
+    </motion.div>
+  );
+}
+
 export default function Page() {
   const [missed, setMissed] = useState(1);
   const current = useMemo(() => driftMap[missed], [missed]);
@@ -720,6 +770,173 @@ export default function Page() {
                   body="A clean summary of what moved you forward, what slipped, and what to change."
                   eyebrow="Useful insight"
                 />
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        <section className="py-20 md:py-28">
+          <div className={sectionWrap}>
+            <motion.div
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.1 }}
+              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.11 } } }}
+            >
+              <motion.div variants={fadeUp}>
+                <span className="rounded-full border border-black/10 bg-white/70 px-3 py-1.5 text-[11px] uppercase tracking-[0.18em] text-black/60 backdrop-blur">
+                  WHAT KEEPS YOU COMING BACK
+                </span>
+              </motion.div>
+
+              <motion.div variants={fadeUp} className="mt-5 grid gap-6 md:grid-cols-[1fr_1fr] md:items-end">
+                <h2 className={`${serif} text-[2.7rem] leading-[0.98] md:text-[4rem]`}>
+                  Five mechanics that turn
+                  <br />a goal into a habit.
+                </h2>
+                <p className="max-w-xl text-[1.04rem] leading-8 text-black/65">
+                  Not gamification gimmicks. Each one is tied directly to the goal and designed to keep momentum alive past the first week.
+                </p>
+              </motion.div>
+
+              {/* Row 1: Momentum Score + Cost of Today */}
+              <div className="mt-12 grid gap-5 md:grid-cols-[1.15fr_0.85fr]">
+
+                {/* Momentum Score */}
+                <motion.div variants={fadeUp} className="rounded-[32px] border border-black/10 bg-white p-6 md:p-8">
+                  <div className="mb-2 text-[0.68rem] uppercase tracking-[0.18em] text-black/40">Feature 01</div>
+                  <h3 className={`${serif} text-[2rem] leading-tight`}>Momentum Score</h3>
+                  <p className="mt-2 text-sm leading-6 text-black/65">Not a streak. A score that factors in consistency, how fast you recover, and how close you are to the deadline. Harder to game, more meaningful to watch grow.</p>
+
+                  <div className="mt-7 rounded-[26px] border border-black/8 bg-[#111] p-6 text-white">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="text-[0.62rem] uppercase tracking-[0.18em] text-white/35">Momentum Score</div>
+                        <div className={`${serif} mt-2 text-[3.8rem] leading-none`}>78</div>
+                        <div className="mt-1.5 text-xs text-white/40">↑ 4 pts from last week</div>
+                      </div>
+                      <div className="relative h-24 w-24">
+                        <svg viewBox="0 0 100 100" className="h-full w-full -rotate-90">
+                          <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="8" />
+                          <circle cx="50" cy="50" r="42" fill="none" stroke="url(#scoreGrad)" strokeWidth="8" strokeLinecap="round" strokeDasharray="264" strokeDashoffset="58" />
+                          <defs>
+                            <linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                              <stop offset="0%" stopColor="#d7bb9a" />
+                              <stop offset="100%" stopColor="#b04a3e" />
+                            </linearGradient>
+                          </defs>
+                        </svg>
+                        <div className="absolute inset-0 flex items-center justify-center text-sm text-white/45">78%</div>
+                      </div>
+                    </div>
+
+                    <div className="mt-6 space-y-4">
+                      {[
+                        { label: "Consistency", value: 85, color: "#d7bb9a" },
+                        { label: "Recovery speed", value: 61, color: "#c47d6a" },
+                        { label: "Goal proximity", value: 88, color: "#a3c4a8" },
+                      ].map((item) => (
+                        <div key={item.label}>
+                          <div className="mb-1.5 flex justify-between text-[10px] uppercase tracking-[0.18em] text-white/38">
+                            <span>{item.label}</span>
+                            <span>{item.value}%</span>
+                          </div>
+                          <div className="h-1.5 overflow-hidden rounded-full bg-white/8">
+                            <div className="h-full rounded-full" style={{ width: `${item.value}%`, backgroundColor: item.color }} />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Cost of Today */}
+                <motion.div variants={fadeUp} className="rounded-[32px] border border-black/10 bg-white p-6 md:p-8">
+                  <div className="mb-2 text-[0.68rem] uppercase tracking-[0.18em] text-black/40">Feature 02</div>
+                  <h3 className={`${serif} text-[2rem] leading-tight`}>"Cost of today" alert</h3>
+                  <p className="mt-2 text-sm leading-6 text-black/65">At 8pm, if the session is unlogged, Forge sends one message that makes the cost of skipping impossible to ignore.</p>
+
+                  <div className="mt-7 space-y-4">
+                    <div className="overflow-hidden rounded-[24px] bg-[#1c1c1e] p-4">
+                      <div className="flex items-start gap-3 rounded-2xl bg-[#2c2c2e] p-4">
+                        <div className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-black">
+                          <Flame className="h-4 w-4 text-[#f4f0e8]" strokeWidth={2} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between gap-2">
+                            <div className="text-[11px] font-medium text-white/90">Forge</div>
+                            <div className="text-[10px] text-white/35 flex-shrink-0">8:00 PM</div>
+                          </div>
+                          <div className="mt-1.5 text-[13px] leading-5 text-white/80">
+                            You have <span className="font-medium text-[#e8c4a0]">1 unlogged session</span> today. Missing it moves your deadline to <span className="font-medium text-[#f0a090]">Jul 3</span>.
+                          </div>
+                        </div>
+                      </div>
+                      <div className="mt-3 grid grid-cols-2 gap-2">
+                        <button className="rounded-xl bg-[#2c2c2e] py-3 text-sm text-[#4da6f5]">Log now</button>
+                        <button className="rounded-xl bg-[#2c2c2e] py-3 text-sm text-white/40">Skip today</button>
+                      </div>
+                    </div>
+
+                    <div className="rounded-[20px] border border-[#8d433c]/15 bg-[#8d433c]/[0.05] p-4">
+                      <div className="text-[0.62rem] uppercase tracking-[0.18em] text-[#8d433c]/80">The difference</div>
+                      <p className="mt-2 text-sm leading-6 text-black/65">Most apps let you skip silently. Forge makes the cost visible before you decide.</p>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+
+              {/* Row 2: Why Resurface + Milestone + One-tap Recovery */}
+              <div className="mt-5 grid gap-5 md:grid-cols-3">
+
+                {/* Why Resurface */}
+                <motion.div variants={fadeUp} className="rounded-[32px] border border-black/10 bg-white p-6 md:p-7">
+                  <div className="mb-2 text-[0.68rem] uppercase tracking-[0.18em] text-black/40">Feature 03</div>
+                  <h3 className={`${serif} text-[1.8rem] leading-tight`}>The "why" resurface</h3>
+                  <p className="mt-2 text-sm leading-6 text-black/65">When you slip, Forge brings back the reason you started — in your own words, at the exact right moment.</p>
+
+                  <div className="mt-6 rounded-[22px] border border-black/8 bg-[#111] p-5 text-white">
+                    <div className="flex items-center gap-2">
+                      <div className="h-1.5 w-1.5 rounded-full bg-[#c04a3d]" />
+                      <div className="text-[10px] uppercase tracking-[0.18em] text-[#c88d86]">2 sessions missed this week</div>
+                    </div>
+                    <div className="mt-4 rounded-2xl border border-white/8 bg-white/[0.04] p-4">
+                      <div className="text-[10px] uppercase tracking-[0.18em] text-white/35">You said, 3 weeks ago</div>
+                      <p className="mt-2 text-sm leading-6 text-white/85 italic">"I want a different career by December. I'm tired of doing work that doesn't matter."</p>
+                    </div>
+                    <p className="mt-4 text-sm leading-6 text-white/60">December is still reachable — but only if this week recovers.</p>
+                  </div>
+                </motion.div>
+
+                {/* Milestone Unlocks */}
+                <motion.div variants={fadeUp} className="rounded-[32px] border border-black/10 bg-white p-6 md:p-7">
+                  <div className="mb-2 text-[0.68rem] uppercase tracking-[0.18em] text-black/40">Feature 04</div>
+                  <h3 className={`${serif} text-[1.8rem] leading-tight`}>Milestone unlocks</h3>
+                  <p className="mt-2 text-sm leading-6 text-black/65">No confetti. A locked forecast update that only becomes visible when you earn it.</p>
+
+                  <div className="mt-6 space-y-3">
+                    <div className="rounded-[22px] border border-[#59705b]/20 bg-[#59705b]/[0.06] p-4">
+                      <div className="flex items-center justify-between">
+                        <div className="text-[10px] uppercase tracking-[0.18em] text-[#59705b]">Unlocked · 3 weeks straight</div>
+                        <Check className="h-4 w-4 text-[#59705b]" strokeWidth={2.2} />
+                      </div>
+                      <div className={`${serif} mt-2 text-[1.45rem]`}>Confidence: 91%</div>
+                      <p className="mt-1 text-xs leading-5 text-black/55">You held the deadline for 21 days. Projection locked at Jun 12.</p>
+                    </div>
+
+                    <div className="rounded-[22px] border border-black/8 bg-black/[0.02] p-4 opacity-40 select-none">
+                      <div className="flex items-center justify-between">
+                        <div className="text-[10px] uppercase tracking-[0.18em] text-black/40">Locked · 5 weeks straight</div>
+                        <div className="h-4 w-4 rounded-full border border-black/15" />
+                      </div>
+                      <div className={`${serif} mt-2 text-[1.45rem] blur-sm`}>Confidence: 97%</div>
+                      <p className="mt-1 text-xs leading-5 text-black/40 blur-[2px]">Two more weeks to unlock this forecast.</p>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* One-tap Recovery */}
+                <OneTapRecovery serif={serif} />
               </div>
             </motion.div>
           </div>
